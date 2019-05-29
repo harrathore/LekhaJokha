@@ -140,7 +140,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:background="@drawable/btn_grad"
-                android:text="VERIFY"
+                android:text="Submit"
                 android:textColor="@color/white"
                 android:textSize="16dp"
                 android:visibility="gone"
