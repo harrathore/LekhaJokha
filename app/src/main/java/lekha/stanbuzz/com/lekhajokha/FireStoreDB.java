@@ -11,7 +11,7 @@ public class FireStoreDB {
     private static FireStoreDB single_instance = null;
     private FirebaseFirestore db;
     private Activity activity;
-    public static final String col_user = "users",
+    public static final String col_user = "users", col_group = "groups",
             user_name = "name",
             user_phone = "phone";
 

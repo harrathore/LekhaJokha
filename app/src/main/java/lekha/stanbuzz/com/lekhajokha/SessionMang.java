@@ -36,7 +36,7 @@ public class SessionMang {
         if(!session.contains(LOGIN)){
             pin("Login Please");
 
-            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+            loginIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             context.startActivity(loginIntent);
             activity.finish();
         }
@@ -51,8 +51,7 @@ public class SessionMang {
         }
 
         pin("logged in , redirecting home");
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        homeIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         context.startActivity(homeIntent);
         activity.finish();
     }
