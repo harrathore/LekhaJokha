@@ -9,7 +9,7 @@ public class Home extends AppCompatActivity {
     private SessionMang sessionMang;
     private FireStoreDB db;
 
-    @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);

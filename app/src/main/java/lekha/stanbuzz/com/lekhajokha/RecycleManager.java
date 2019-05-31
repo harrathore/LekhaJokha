@@ -14,7 +14,7 @@ public class RecycleManager {
         activity = a;
     }
     
-    public void setGroupRecycler(Query query, int recyclerViewId) {
+    public void setGroupRecycler(Query query, int recyclerViewId){
         FirestoreRecyclerOptions<DataHolder.GroupHolder> options = new FirestoreRecyclerOptions.Builder<DataHolder.GroupHolder>().setQuery(query, DataHolder.GroupHolder.class).build();
 
         RecyclerView recyclerView = activity.findViewById(recyclerViewId);
