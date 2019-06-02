@@ -13,15 +13,23 @@ public class RecycleManager {
     public RecycleManager(Activity a) {
         activity = a;
     }
-    
+
+    public void setChatRecycler(Query query, int recyclerViewId){
+        FirestoreRecyclerOptions<DataHolder.ChatHolder> options = new FirestoreRecyclerOptions.Builder<DataHolder.ChatHolder>().setQuery(query, DataHolder.ChatHolder.class).build();
+        RecyclerView recyclerView = activity.findViewById(recyclerViewId);
+        DataAdaptor.ChatAdaptor chatAdaptor = new DataAdaptor.ChatAdaptor(options);
+        recyclerView.setLayoutManager(new LinearLayoutManager(activity));
+        recyclerView.setAdapter(chatAdaptor);
+        chatAdaptor.startListening();
+    }
+
     public void setGroupRecycler(Query query, int recyclerViewId){
         FirestoreRecyclerOptions<DataHolder.GroupHolder> options = new FirestoreRecyclerOptions.Builder<DataHolder.GroupHolder>().setQuery(query, DataHolder.GroupHolder.class).build();
-
         RecyclerView recyclerView = activity.findViewById(recyclerViewId);
-        DataAdaptor.GroupAdaptor inboxAdaptor = new DataAdaptor.GroupAdaptor(options);
+        DataAdaptor.GroupAdaptor groupAdaptor = new DataAdaptor.GroupAdaptor(options);
         recyclerView.setLayoutManager(new LinearLayoutManager(activity));
-        recyclerView.setAdapter(inboxAdaptor);
-        inboxAdaptor.startListening();
+        recyclerView.setAdapter(groupAdaptor);
+        groupAdaptor.startListening();
     }
 
     private void pin(String msg) {

@@ -23,7 +23,7 @@
                                 <PersistentState>
                                   <option name="values">
                                     <map>
-                                      <entry key="url" value="jar:file:/E:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_close_black_24dp.xml" />
+                                      <entry key="url" value="jar:file:/E:/Program%20Files/Android/Android%20Studio/plugins/android/lib/android.jar!/images/material_design_icons/navigation/ic_arrow_back_black_24dp.xml" />
                                     </map>
                                   </option>
                                 </PersistentState>
@@ -34,8 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_group" />
-                            <entry key="sourceFile" value="C:\Users\acer\Desktop\group.svg" />
+                            <entry key="outputName" value="ic_menu_list" />
+                            <entry key="sourceFile" value="C:\Users\acer\Desktop\list.svg" />
                           </map>
                         </option>
                       </PersistentState>

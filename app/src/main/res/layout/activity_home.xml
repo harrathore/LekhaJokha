@@ -20,13 +20,13 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/grpname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp"
-                android:text="Lekha Jokha"
+                android:text="My Groups"
                 android:textColor="@color/white"
                 android:textSize="24dp"
                 android:textStyle="bold"
@@ -35,45 +35,55 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <FrameLayout
-                android:layout_width="150dp"
+                android:id="@+id/btnNewGrp"
+                android:layout_width="140dp"
                 android:layout_height="40dp"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:foregroundGravity="center"
                 android:translationZ="8dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.82"
+                app:layout_constraintStart_toEndOf="@+id/grpname"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <View
                     android:id="@+id/view"
-                    android:layout_width="155dp"
+                    android:layout_width="140dp"
                     android:layout_height="match_parent"
                     android:background="@drawable/btn_bg" />
 
-                <LinearLayout
-                    android:layout_width="wrap_content"
+                <android.support.constraint.ConstraintLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_gravity="center"
-                    android:layout_marginEnd="8dp"
                     android:orientation="horizontal"
                     android:padding="8dp">
 
                     <ImageView
-                        android:id="@+id/imageView2"
+                        android:id="@+id/btnBack"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/textView4"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent"
                         app:srcCompat="@drawable/ic_add_group" />
 
                     <TextView
                         android:id="@+id/textView4"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_widthw="wrap_content"
                         android:text="New Group"
                         android:textColor="@color/colorPrimary"
-                        android:textSize="18sp" />
+                        android:textSize="18sp"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toEndOf="@id/btnBack"
+                        app:layout_constraintTop_toTopOf="parent" />
 
-                </LinearLayout>
+                </android.support.constraint.ConstraintLayout>
 
             </FrameLayout>
 
@@ -98,9 +108,7 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/groupRecycle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-            </android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"/>
 
         </LinearLayout>
     </ScrollView>
