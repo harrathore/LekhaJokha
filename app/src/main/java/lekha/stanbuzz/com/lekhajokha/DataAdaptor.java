@@ -47,8 +47,8 @@ public class DataAdaptor {
             }
 
 
-            holder.date1.setText(chatHolder.getDate().toString());
-            holder.date2.setText(chatHolder.getDate().toString());
+            holder.date1.setText(FireStoreDB.PrettyTime(chatHolder.getDate()));
+            holder.date2.setText(FireStoreDB.PrettyTime(chatHolder.getDate()));
 
             holder.msg1.setText(chatHolder.getMsg());
             holder.msg2.setText(chatHolder.getMsg());
@@ -180,6 +180,8 @@ public class DataAdaptor {
         private Map<String, Object> members;
         private List<DataHolder.ContactHolder> contactVOList;
         private Context mContext;
+        private String phone;
+
         public AllContactsAdapter(List<DataHolder.ContactHolder> contactVOList, Context mContext){
             this.contactVOList = contactVOList;
             this.mContext = mContext;
@@ -196,18 +198,16 @@ public class DataAdaptor {
         @Override
         public void onBindViewHolder(final ContactViewHolder holder, int position) {
             final DataHolder.ContactHolder contactVO = contactVOList.get(position);
-            final String phone = contactVO.getContactNumber().trim().substring(contactVO.getContactNumber().length() - 10);
-            holder.tvContactName.setText(contactVO.getContactName());
-            holder.tvPhoneNumber.setText(contactVO.getContactNumber());
-
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    int pos =  holder.getAdapterPosition();
-                    pin(String.valueOf(pos));
-                    if(pos!=RecyclerView.NO_POSITION) {
-                        if(contactVO.getContactNumber().trim().length()>=10) {
-
+            if(contactVO.getContactNumber().trim().length()>=10) {
+                phone = contactVO.getContactNumber().trim().substring(contactVO.getContactNumber().length() - 10);
+                holder.tvContactName.setText(contactVO.getContactName());
+                holder.tvPhoneNumber.setText(contactVO.getContactNumber());
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        int pos =  holder.getAdapterPosition();
+                        pin(String.valueOf(pos));
+                        if(pos!=RecyclerView.NO_POSITION) {
                             if(members.containsKey(phone)) {
                                 members.remove(phone);
                                 holder.ivContactImage.setImageResource(R.drawable.ic_user);
@@ -217,9 +217,13 @@ public class DataAdaptor {
                             }
                         }
                     }
-                }
-            });
+                });
+            }
+        }
 
+        @Override
+        public int getItemViewType(int position) {
+            return position;
         }
 
         @Override

@@ -9,8 +9,8 @@ import android.widget.TextView;
 import com.google.firebase.firestore.Query;
 
 public class Chat extends AppCompatActivity {
-    private ImageView  imgBack, menulist;
-    private TextView grpname;
+    private ImageView  imgBack, menulist, pay;
+    private TextView grpname, sendmsgreply;
     private FireStoreDB db;
 
     @Override
@@ -25,6 +25,8 @@ public class Chat extends AppCompatActivity {
         imgBack = findViewById(R.id.btnBack);
         grpname = findViewById(R.id.grpname);
         menulist = findViewById(R.id.menulist);
+        pay = findViewById(R.id.imgpay);
+        sendmsgreply = findViewById(R.id.sendmsgreply);
 
         imgBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,13 +42,21 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-        grpname.setText(getIntent().getStringExtra("title"));
+        pay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
+
+        sendmsg.setText(getIntent().getStringExtra("title"));
 
         init();
     }
 
     private void init() {
-        Query query = db.getDb().collection(FireStoreDB.col_group).document(getIntent().getStringExtra("gid")).collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.DESCENDING);
+        Query query = db.getDb().collection(FireStoreDB.col_group).document(getIntent().getStringExtra("gid")).collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
         RecycleManager recyclerManager = new RecycleManager(this);
         recyclerManager.setChatRecycler(query, R.id.msgRecycle);
     }

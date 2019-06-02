@@ -12,8 +12,8 @@ public class DataHolder {
         private String msg, type, name;
         private DocumentReference sid, userId;
 
-        //public ChatHolder() {
-        //}
+        public ChatHolder() {
+        }
 
         public ChatHolder(Long amt, Date date, String msg, String type, String name, DocumentReference sid, DocumentReference userId) {
             this.amt = amt;

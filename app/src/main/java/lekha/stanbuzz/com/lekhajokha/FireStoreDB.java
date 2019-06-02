@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.util.Log;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -35,7 +36,9 @@ public class FireStoreDB {
             } else if(agoHour<24) {
                 return agoHour + " hours ago";
             } else {
-                return agoDay + " days ago";
+                SimpleDateFormat formatter = new SimpleDateFormat("h:m a - dd MMM");
+                String format = formatter.format(past);
+                return format;
             }
         }
         catch (Exception j){
