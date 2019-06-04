@@ -34,8 +34,8 @@
                         <option name="values">
                           <map>
                             <entry key="assetSourceType" value="FILE" />
-                            <entry key="outputName" value="ic_send" />
-                            <entry key="sourceFile" value="C:\Users\acer\Desktop\send.svg" />
+                            <entry key="outputName" value="ic_return" />
+                            <entry key="sourceFile" value="C:\Users\acer\Downloads\return.svg" />
                           </map>
                         </option>
                       </PersistentState>

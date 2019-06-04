@@ -87,52 +87,160 @@
 
     </ScrollView>
 
-    <android.support.constraint.ConstraintLayout
+    <LinearLayout
         android:id="@+id/constraintLayout"
         android:layout_width="0dp"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:translationZ="4dp"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent">
 
-        <EditText
-            android:id="@+id/sendmsgreply"
-            android:layout_width="0dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="8dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/msg_reply_box"
-            android:ems="10"
-            android:inputType="text"
-            android:paddingStart="16dp"
-            android:paddingTop="4dp"
-            android:paddingEnd="12dp"
-            android:paddingBottom="4dp"
-            android:translationZ="2dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imgpay"
-            app:layout_constraintHorizontal_bias="0.49"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/amtBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
-        <ImageView
-            android:id="@+id/imgpay"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="8dp"
-            android:background="@drawable/circle_gray"
-            android:translationZ="8dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/sendmsgreply"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_rupees" />
-    </android.support.constraint.ConstraintLayout>
+            <ImageView
+                android:id="@+id/btnReturn"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/circle_gray"
+                android:paddingStart="4dp"
+                android:paddingTop="8dp"
+                android:paddingEnd="8dp"
+                android:paddingBottom="4dp"
+                android:translationZ="2dp"
+                app:layout_constraintBottom_toBottomOf="@id/amtInput"
+                app:layout_constraintEnd_toStartOf="@id/amtInput"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@id/amtInput"
+                app:srcCompat="@drawable/ic_return"
+                tools:layout_editor_absoluteY="8dp" />
+
+            <EditText
+                android:id="@+id/amtInput"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/msg_reply_box"
+                android:ems="10"
+                android:hint="Enter paid amount"
+                android:inputType="number"
+                android:maxLength="10"
+                android:paddingStart="36dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                app:layout_constraintBottom_toTopOf="@id/amtNote"
+                app:layout_constraintEnd_toStartOf="@+id/btnSendAmt"
+                app:layout_constraintStart_toEndOf="@+id/btnReturn"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="₹"
+                android:textSize="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/amtInput"
+                app:layout_constraintStart_toStartOf="@id/amtInput"
+                app:layout_constraintTop_toTopOf="@+id/amtInput" />
+
+            <ImageView
+                android:id="@+id/btnSendAmt"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/circle_gray"
+                android:translationZ="4dp"
+                app:layout_constraintBottom_toBottomOf="@id/amtInput"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/amtInput"
+                app:layout_constraintTop_toTopOf="@id/amtInput"
+                app:srcCompat="@drawable/ic_send" />
+
+            <EditText
+                android:id="@+id/amtNote"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/msg_reply_box"
+                android:ems="10"
+                android:hint="For what or where you paid?"
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/amtInput"
+                tools:layout_editor_absoluteY="8dp" />
+
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/msgBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/msgInput"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/msg_reply_box"
+                android:ems="10"
+                android:hint="Type message..."
+                android:inputType="text"
+                android:paddingStart="16dp"
+                android:paddingTop="4dp"
+                android:paddingEnd="12dp"
+                android:paddingBottom="4dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnSwitch"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/btnSwitch"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="16dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/circle_gray"
+                android:translationZ="8dp"
+                app:layout_constraintBottom_toBottomOf="@id/msgInput"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/msgInput"
+                app:layout_constraintTop_toTopOf="@id/msgInput"
+                app:srcCompat="@drawable/ic_rupees" />
+
+        </android.support.constraint.ConstraintLayout>
+
+
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
