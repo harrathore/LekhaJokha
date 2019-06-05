@@ -14,6 +14,7 @@ public class Home extends AppCompatActivity {
     private SessionMang sessionMang;
     private FireStoreDB db;
     private View btnNewGrp;
+    private String currentUserName;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

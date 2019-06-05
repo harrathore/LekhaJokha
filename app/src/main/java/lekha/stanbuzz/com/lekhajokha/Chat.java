@@ -1,14 +1,26 @@
 package lekha.stanbuzz.com.lekhajokha;
 
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Chat extends AppCompatActivity {
     private ImageView  imgBack, menulist;
@@ -17,6 +29,9 @@ public class Chat extends AppCompatActivity {
     private View amtBox, msgBox;
     private FireStoreDB db;
     private Boolean flagSwitch = true;
+    private SessionMang sessionMang;
+    private String sid = null;
+    private DocumentReference grpRef, userRef, sessRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +41,7 @@ public class Chat extends AppCompatActivity {
         getSupportActionBar().hide();
 
         db = FireStoreDB.getInstance(this);
+        sessionMang = SessionMang.getInstance(this);
 
         imgBack = findViewById(R.id.btnBack);
         menulist = findViewById(R.id.menulist);
@@ -37,11 +53,29 @@ public class Chat extends AppCompatActivity {
         msgBox = findViewById(R.id.msgBox);
         btnReturn = findViewById(R.id.btnReturn);
 
+        grpRef = db.getDb().collection(FireStoreDB.col_group).document(getIntent().getStringExtra("gid"));
+        userRef = db.getDb().collection(FireStoreDB.col_user).document(sessionMang.getUserId());
+
         init();
     }
 
     private void sendMsg() {
+        String msg = msgInp.getText().toString();
+        pin("Trying send msg...");
+        pin(msg);
+        if(sid!=null && msg.length()>0 && msg!=" ") {
+            Map<String, Object> data = new HashMap<>();
 
+            data.put("msg", msgInp.getText().toString());
+            data.put("type", "MSG");
+            data.put("date", new Date());
+            data.put("name", sessionMang.getUserName());
+            data.put("userId", userRef);
+            data.put("sid", sessRef);
+
+            grpRef.collection(FireStoreDB.col_msg).document().set(data);
+            pin("Msg sent");
+        }
     }
 
     private void sendAmt() {
@@ -108,8 +142,24 @@ public class Chat extends AppCompatActivity {
         });
 
 
-        Query query = db.getDb().collection(FireStoreDB.col_group).document(getIntent().getStringExtra("gid")).collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
+        Query query = grpRef.collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
         RecycleManager recyclerManager = new RecycleManager(this);
         recyclerManager.setChatRecycler(query, R.id.msgRecycle);
+
+        grpRef.collection(FireStoreDB.col_sess).orderBy("started_on").limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<QuerySnapshot> task) {
+            if (task.isSuccessful()) {
+                for (QueryDocumentSnapshot document : task.getResult()) {
+                    sid = document.getId();
+                    sessRef = grpRef.collection(FireStoreDB.col_sess).document(sid);
+                }
+            }
+            }
+        });
+    }
+
+    private void pin(String msg) {
+        Log.d("CHATX", msg);
     }
 }
