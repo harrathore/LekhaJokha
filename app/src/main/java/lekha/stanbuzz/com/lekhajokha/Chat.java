@@ -4,12 +4,15 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
+import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ScrollView;
+import android.widget.TextView;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -24,14 +27,17 @@ import java.util.Map;
 
 public class Chat extends AppCompatActivity {
     private ImageView  imgBack, menulist;
-    private EditText amtInp, msgInp;
+    private EditText amtInp, msgInp, noteInp;
+    private TextView headTitle;
     private ImageView btnSwitch, btnSendAmt, btnReturn;
     private View amtBox, msgBox;
+    private ScrollView scrollVw;
     private FireStoreDB db;
     private Boolean flagSwitch = true;
     private SessionMang sessionMang;
     private String sid = null;
     private DocumentReference grpRef, userRef, sessRef;
+    private RecyclerView recyclerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,14 +53,19 @@ public class Chat extends AppCompatActivity {
         menulist = findViewById(R.id.menulist);
         amtInp = findViewById(R.id.amtInput);
         msgInp = findViewById(R.id.msgInput);
+        noteInp = findViewById(R.id.amtNote);
         btnSwitch = findViewById(R.id.btnSwitch);
         btnSendAmt = findViewById(R.id.btnSendAmt);
         amtBox = findViewById(R.id.amtBox);
         msgBox = findViewById(R.id.msgBox);
+        headTitle = findViewById(R.id.headTitle);
+        scrollVw = findViewById(R.id.scrollVw);
         btnReturn = findViewById(R.id.btnReturn);
+        recyclerView = findViewById(R.id.msgRecycle);
 
         grpRef = db.getDb().collection(FireStoreDB.col_group).document(getIntent().getStringExtra("gid"));
         userRef = db.getDb().collection(FireStoreDB.col_user).document(sessionMang.getUserId());
+        headTitle.setText(getIntent().getStringExtra("title"));
 
         init();
     }
@@ -74,11 +85,31 @@ public class Chat extends AppCompatActivity {
             data.put("sid", sessRef);
 
             grpRef.collection(FireStoreDB.col_msg).document().set(data);
+            msgInp.setText("");
+
             pin("Msg sent");
         }
     }
 
     private void sendAmt() {
+        Long amt = Long.valueOf(amtInp.getText().toString());
+        if(sid!=null && amt>0) {
+            Map<String, Object> data = new HashMap<>();
+
+            data.put("amt", amt);
+            data.put("msg", noteInp.getText().toString());
+            data.put("type", "TRANS");
+            data.put("date", new Date());
+            data.put("name", sessionMang.getUserName());
+            data.put("userId", userRef);
+            data.put("sid", sessRef);
+
+            grpRef.collection(FireStoreDB.col_msg).document().set(data);
+            amtInp.setText("");
+            noteInp.setText("");
+
+            pin("Amt sent");
+        }
 
     }
 

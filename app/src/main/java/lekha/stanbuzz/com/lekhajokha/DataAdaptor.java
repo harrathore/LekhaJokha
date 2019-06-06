@@ -17,9 +17,7 @@ import com.firebase.ui.firestore.FirestoreRecyclerOptions;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class DataAdaptor {
     
@@ -44,14 +42,17 @@ public class DataAdaptor {
             if(chatHolder.getAmt()!=null) {
                 holder.amt1.setText(chatHolder.getAmt().toString());
                 holder.amt2.setText(chatHolder.getAmt().toString());
+
+                holder.note1.setText(chatHolder.getMsg());
+                holder.note2.setText(chatHolder.getMsg());
+            } else {
+                holder.msg1.setText(chatHolder.getMsg());
+                holder.msg2.setText(chatHolder.getMsg());
             }
 
 
             holder.date1.setText(FireStoreDB.PrettyTime(chatHolder.getDate()));
             holder.date2.setText(FireStoreDB.PrettyTime(chatHolder.getDate()));
-
-            holder.msg1.setText(chatHolder.getMsg());
-            holder.msg2.setText(chatHolder.getMsg());
 
             holder.card1.setVisibility(View.GONE);
             holder.card2.setVisibility(View.GONE);
@@ -93,6 +94,7 @@ public class DataAdaptor {
             private TextView name1,name2, name3, name4,
                     msg1, msg2,
                     amt1, amt2,
+                    note1, note2,
                     date1, date2;
             private View card1,card2,card3,card4;
 
@@ -107,6 +109,8 @@ public class DataAdaptor {
                 msg2 = (TextView) itemView.findViewById(R.id.msg2);
                 amt1 = (TextView) itemView.findViewById(R.id.amt1);
                 amt2 = (TextView) itemView.findViewById(R.id.amt2);
+                note1 = (TextView) itemView.findViewById(R.id.note1);
+                note2 = (TextView) itemView.findViewById(R.id.note2);
                 date1 = (TextView) itemView.findViewById(R.id.date1);
                 date2 = (TextView) itemView.findViewById(R.id.date2);
 
@@ -177,15 +181,14 @@ public class DataAdaptor {
     }
 
     public static class AllContactsAdapter extends RecyclerView.Adapter<AllContactsAdapter.ContactViewHolder>{
-        private Map<String, Object> members;
         private List<DataHolder.ContactHolder> contactVOList;
         private Context mContext;
         private String phone;
+        private static MemberChangeListener memberChangeListener;
 
         public AllContactsAdapter(List<DataHolder.ContactHolder> contactVOList, Context mContext){
             this.contactVOList = contactVOList;
             this.mContext = mContext;
-            members = new HashMap<>();
         }
 
         @Override
@@ -197,28 +200,22 @@ public class DataAdaptor {
 
         @Override
         public void onBindViewHolder(final ContactViewHolder holder, int position) {
-            final DataHolder.ContactHolder contactVO = contactVOList.get(position);
+            DataHolder.ContactHolder contactVO = contactVOList.get(position);
             if(contactVO.getContactNumber().trim().length()>=10) {
-                phone = contactVO.getContactNumber().trim().substring(contactVO.getContactNumber().length() - 10);
+                phone = contactVO.getContactNumber().replace(" ", "");
+                phone = phone.substring(phone.length() - 10);
                 holder.tvContactName.setText(contactVO.getContactName());
                 holder.tvPhoneNumber.setText(contactVO.getContactNumber());
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        int pos =  holder.getAdapterPosition();
-                        pin(String.valueOf(pos));
-                        if(pos!=RecyclerView.NO_POSITION) {
-                            if(members.containsKey(phone)) {
-                                members.remove(phone);
-                                holder.ivContactImage.setImageResource(R.drawable.ic_user);
-                            } else {
-                                members.put(phone, phone);
-                                holder.ivContactImage.setImageResource(R.drawable.ic_user_active);
-                            }
-                        }
-                    }
-                });
+                holder.phone = phone;
             }
+        }
+
+        public void setMemberChangeListener(MemberChangeListener memberChangeListener) {
+            this.memberChangeListener = memberChangeListener;
+        }
+
+        public interface MemberChangeListener {
+            void onMemberChange(String phone, ImageView imageView);
         }
 
         @Override
@@ -235,6 +232,7 @@ public class DataAdaptor {
             ImageView ivContactImage;
             TextView tvContactName;
             TextView tvPhoneNumber;
+            String phone;
 
             public ContactViewHolder(final View itemView) {
                 super(itemView);
@@ -242,6 +240,14 @@ public class DataAdaptor {
                 tvContactName = (TextView) itemView.findViewById(R.id.tvContactName);
                 tvPhoneNumber = (TextView) itemView.findViewById(R.id.tvPhoneNumber);
 
+                itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v){
+                        if (getAdapterPosition()!=RecyclerView.NO_POSITION) {
+                            memberChangeListener.onMemberChange(phone, ivContactImage);
+                        }
+                    }
+                });
 
             }
         }
@@ -254,6 +260,5 @@ public class DataAdaptor {
             Log.d("ADPX", "Null pointer found");
         }
     }
-
 
 }

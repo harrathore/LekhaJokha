@@ -20,7 +20,7 @@
             android:background="@color/colorPrimary">
 
             <TextView
-                android:id="@+id/grpname"
+                android:id="@+id/headTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -44,7 +44,7 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.82"
-                app:layout_constraintStart_toEndOf="@+id/grpname"
+                app:layout_constraintStart_toEndOf="@+id/headTitle"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <View
