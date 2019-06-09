@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import android.app.Activity;
 import android.content.Context;

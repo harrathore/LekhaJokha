@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import android.Manifest;
 import android.content.Intent;
@@ -44,7 +44,7 @@ public class Home extends AppCompatActivity {
             }
         });
 
-        Query query = db.getDb().collection(FireStoreDB.col_group);
+        Query query = db.getDb().collection(FireStoreDB.col_group).whereArrayContains("member", sessionMang.getUserId());
         RecycleManager recyclerManager = new RecycleManager(this);
         recyclerManager.setGroupRecycler(query, R.id.groupRecycle);
     }

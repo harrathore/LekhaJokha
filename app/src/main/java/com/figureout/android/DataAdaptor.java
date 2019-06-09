@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import android.app.Activity;
 import android.content.Context;
@@ -20,9 +20,70 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import java.util.List;
 
 public class DataAdaptor {
-    
+
+    public static class ReportAdaptor extends FirestoreRecyclerAdapter<DataHolder.ReportHolder, ReportAdaptor.ReportViewHolder> {
+        private Long avg;
+
+        public void setAvg(Long avg) {
+            this.avg = avg;
+        }
+
+        public ReportAdaptor(@NonNull FirestoreRecyclerOptions<DataHolder.ReportHolder> options) {
+            super(options);
+        }
+
+        @Override
+        protected void onBindViewHolder(@NonNull ReportViewHolder holder, int position, @NonNull DataHolder.ReportHolder reportHolder) {
+            holder.name.setText(reportHolder.getName());
+            Long invest = reportHolder.getInvested(),
+                 due = invest-avg;
+            holder.invest.setText("Invested : ₹"+invest.toString());
+            if(due>0) {
+                holder.due.setText("+₹"+Math.abs(due));
+                holder.due.setTextColor(holder.due.getContext().getResources().getColor(R.color.green));
+            } else {
+                holder.due.setText("- ₹"+Math.abs(due));
+                holder.due.setTextColor(holder.due.getContext().getResources().getColor(R.color.red));
+            }
+        }
+
+        private OnItemClickListener listener;
+
+        @NonNull
+        @Override
+        public ReportViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+            View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.card_member_report, parent, false);
+            return new ReportViewHolder(v);
+        }
+
+        public static class ReportViewHolder extends RecyclerView.ViewHolder{
+            private TextView name, invest, due;
+
+            public ReportViewHolder(final View itemView) {
+                super(itemView);
+
+                name = (TextView) itemView.findViewById(R.id.name);
+                invest = (TextView) itemView.findViewById(R.id.invest);
+                due = (TextView) itemView.findViewById(R.id.due);
+            }
+        }
+
+        public interface OnItemClickListener {
+            void onItemClick(DocumentSnapshot documentSnapshot, int pos);
+        }
+
+        public void setOnItemClickListener(OnItemClickListener listener) {
+            this.listener = listener;
+        }
+    }
+
     public static class ChatAdaptor extends FirestoreRecyclerAdapter<DataHolder.ChatHolder, ChatAdaptor.ChatViewHolder> {
         private SessionMang sessionMang;
+        private String currentSid;
+
+        public void setCurrentSid(String currentSid) {
+            this.currentSid = currentSid;
+        }
 
         public ChatAdaptor(@NonNull FirestoreRecyclerOptions<DataHolder.ChatHolder> options) {
             super(options);
@@ -72,6 +133,19 @@ public class DataAdaptor {
                     holder.card3.setVisibility(View.VISIBLE);
                 }
             }
+
+            if(chatHolder.getSid().getId().equals(currentSid)) {
+                holder.card1.setAlpha(1);
+                holder.card2.setAlpha(1);
+                holder.card3.setAlpha(1);
+                holder.card4.setAlpha(1);
+            } else {
+                holder.card1.setAlpha(0.3f);
+                holder.card2.setAlpha(0.3f);
+                holder.card3.setAlpha(0.3f);
+                holder.card4.setAlpha(0.3f);
+            }
+            pin(chatHolder.getSid().getId()+" -- "+currentSid);
         }
 
         private Boolean isMyMsg(DocumentReference userRef) {
@@ -201,7 +275,7 @@ public class DataAdaptor {
         @Override
         public void onBindViewHolder(final ContactViewHolder holder, int position) {
             DataHolder.ContactHolder contactVO = contactVOList.get(position);
-            if(contactVO.getContactNumber().trim().length()>=10) {
+            if(contactVO.getContactNumber()!=null && contactVO.getContactNumber().trim().length()>=10) {
                 phone = contactVO.getContactNumber().replace(" ", "");
                 phone = phone.substring(phone.length() - 10);
                 holder.tvContactName.setText(contactVO.getContactName());

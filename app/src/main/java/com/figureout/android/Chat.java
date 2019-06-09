@@ -1,6 +1,8 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.content.res.AppCompatResources;
@@ -17,6 +19,8 @@ import android.widget.TextView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -33,6 +37,7 @@ public class Chat extends AppCompatActivity {
     private View amtBox, msgBox;
     private ScrollView scrollVw;
     private FireStoreDB db;
+    private Intent report;
     private Boolean flagSwitch = true;
     private SessionMang sessionMang;
     private String sid = null;
@@ -120,10 +125,14 @@ public class Chat extends AppCompatActivity {
                 finish();
             }
         });
+
+        report = new Intent(getBaseContext(), Report.class);
+        report.putExtra("gid", getIntent().getStringExtra("gid"));
+
         menulist.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                startActivity(report);
             }
         });
         btnSwitch.setOnClickListener(new View.OnClickListener() {
@@ -172,22 +181,40 @@ public class Chat extends AppCompatActivity {
             }
         });
 
-
-        Query query = grpRef.collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
-        RecycleManager recyclerManager = new RecycleManager(this);
-        recyclerManager.setChatRecycler(query, R.id.msgRecycle);
-
-        grpRef.collection(FireStoreDB.col_sess).orderBy("started_on").limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        grpRef.collection(FireStoreDB.col_sess).orderBy("started_on", Query.Direction.DESCENDING).limit(1).get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
             if (task.isSuccessful()) {
                 for (QueryDocumentSnapshot document : task.getResult()) {
                     sid = document.getId();
                     sessRef = grpRef.collection(FireStoreDB.col_sess).document(sid);
+
+                    Query query = grpRef.collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
+                    RecycleManager recyclerManager = new RecycleManager(Chat.this);
+                    recyclerManager.setChatRecycler(query, R.id.msgRecycle, sid);
                 }
             }
             }
         });
+
+        grpRef.collection(FireStoreDB.col_sess).orderBy("started_on", Query.Direction.DESCENDING).limit(1).addSnapshotListener(new EventListener<QuerySnapshot>() {
+            @Override
+            public void onEvent(@Nullable QuerySnapshot value, @Nullable FirebaseFirestoreException e) {
+                if (e != null) {
+                    pin("sid failed : "+e);
+                    return;
+                }
+                for (QueryDocumentSnapshot doc : value) {
+                    sid = doc.getId();
+                    sessRef = grpRef.collection(FireStoreDB.col_sess).document(sid);
+                    Query query = grpRef.collection(FireStoreDB.col_msg).orderBy("date", Query.Direction.ASCENDING);
+                    RecycleManager recyclerManager = new RecycleManager(Chat.this);
+                    recyclerManager.setChatRecycler(query, R.id.msgRecycle, sid);
+                }
+
+            }
+        });
+
     }
 
     private void pin(String msg) {

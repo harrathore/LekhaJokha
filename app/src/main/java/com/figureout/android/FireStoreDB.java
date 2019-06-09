@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import android.app.Activity;
 import android.util.Log;
@@ -12,7 +12,7 @@ public class FireStoreDB {
     private static FireStoreDB single_instance = null;
     private FirebaseFirestore db;
     private Activity activity;
-    public static final String col_user = "users", col_group = "groups", col_msg = "message", col_sess = "sessions",
+    public static final String col_user = "users", col_group = "groups", col_msg = "message", col_sess = "sessions", col_mem = "members",
             user_name = "name",
             user_phone = "phone";
 

@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.android;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("lekha.stanbuzz.com.lekhajokha", appContext.getPackageName());
+        assertEquals("com.lekhajokha", appContext.getPackageName());
     }
 }

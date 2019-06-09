@@ -1,6 +1,5 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
-import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     private String mVerificationId;
     private PhoneAuthProvider.ForceResendingToken mResendToken;
     private Button btnNext, btnSubmit;
-    private Boolean isRegistered = true;
+    private Boolean isRegistered = true, autoVerify = false;
     private FirebaseAuth mAuth;
     private Boolean nxtFlag = false, submitFlag = false;
     private FireStoreDB db;
@@ -59,9 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               userPhoneView.setText("8516876554");
                 if(!nxtFlag) {
-                    PhoneAuthProvider.getInstance().verifyPhoneNumber("+91"+ userPhoneView.getText().toString(), 60, TimeUnit.SECONDS, LoginActivity.this, mCallbacks);
                     nxtFlag = true;
                     checkRegistration();
                 }
@@ -71,14 +68,17 @@ public class LoginActivity extends AppCompatActivity {
         btnSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               otpCodeView.setText("123456");
                 if (!submitFlag) {
                     if(!isRegistered && fullNameView.getText().length()<3) {
                         showToast("Enter valid Name !");
                         return;
                     }
-                    PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otpCodeView.getText().toString());
-                    verifyUserOtp(credential);
+                    if(!autoVerify) {
+                        PhoneAuthCredential credential = PhoneAuthProvider.getCredential(mVerificationId, otpCodeView.getText().toString());
+                        verifyUserOtp(credential);
+                    } else {
+                        saveAndLogin();
+                    }
                     submitFlag = true;
                 }
             }
@@ -150,6 +150,7 @@ public class LoginActivity extends AppCompatActivity {
                             isRegistered = false;
                             fullNameView.setVisibility(View.VISIBLE);
                         }
+                        PhoneAuthProvider.getInstance().verifyPhoneNumber("+91"+ userPhoneView.getText().toString(), 60, TimeUnit.SECONDS, LoginActivity.this, mCallbacks);
                     } else {
                         pin("Error getting documents: "+task.getException());
                     }
@@ -157,11 +158,8 @@ public class LoginActivity extends AppCompatActivity {
             });
     }
 
-
-
     // verifiction in our project is next
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-
         @Override
         public void onVerificationCompleted(PhoneAuthCredential credential) {
             // This callback will be invoked in two situations:
@@ -171,7 +169,14 @@ public class LoginActivity extends AppCompatActivity {
             //     detect the incoming verification SMS and make verification without
             //     user action.
             pin("onVerificationCompleted:" + credential);
-
+            autoVerify = true;
+            otpCodeView.setVisibility(View.GONE);
+            userPhoneView.setVisibility(View.GONE);
+            btnNext.setVisibility(View.GONE);
+            btnSubmit.setVisibility(View.VISIBLE);
+            if(isRegistered) {
+                sessionMang.LogIn(userPhoneView.getText().toString());
+            }
         }
 
         @Override
@@ -187,9 +192,6 @@ public class LoginActivity extends AppCompatActivity {
             }
             nxtFlag = false;
         }
-
-
-
 
         @Override
         public void onCodeSent(String verificationId, PhoneAuthProvider.ForceResendingToken token) {
@@ -212,5 +214,4 @@ public class LoginActivity extends AppCompatActivity {
         pin(msg);
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
     }
-
 }

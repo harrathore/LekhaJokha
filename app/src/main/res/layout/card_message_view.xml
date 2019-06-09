@@ -21,7 +21,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            app:cardBackgroundColor="#fb9c9c"
+            app:cardBackgroundColor="#c2dff7"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            app:cardBackgroundColor="@color/bgColor"
+            app:cardBackgroundColor="#c2dff7"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -90,7 +90,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="500"
+                        android:text="0"
                         android:textSize="32dp"
                         android:textStyle="normal" />
                 </LinearLayout>
@@ -130,7 +130,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            app:cardBackgroundColor="#66f1d2"
+            app:cardBackgroundColor="@color/bgColor"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -164,7 +164,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="4dp"
-            app:cardBackgroundColor="#ffcf4a"
+            app:cardBackgroundColor="@color/bgColor"
             app:cardCornerRadius="8dp">
 
             <LinearLayout
@@ -199,7 +199,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_marginTop="8dp"
-                        android:text="500"
+                        android:text="0"
                         android:textSize="32dp"
                         android:textStyle="normal" />
                 </LinearLayout>

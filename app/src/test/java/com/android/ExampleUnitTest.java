@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.android;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import android.content.ContentResolver;
 import android.content.DialogInterface;
@@ -123,35 +123,15 @@ public class NewGroup extends AppCompatActivity {
                 @Override
                 public void onSuccess(DocumentReference documentReference) {
                     pin("Group created successfully!");
-                    createSession(documentReference);
-                }
-            })
-            .addOnFailureListener(new OnFailureListener() {
-                @Override
-                public void onFailure(@NonNull Exception e) {
-                    pin("Error writing document : "+e);
-                }
-            });
-
-    }
-
-    private void createSession(final DocumentReference groupRef) {
-        Map<String, Object> newSess = new HashMap<>();
-        newSess.put("closed", false);
-        newSess.put("started_on", new Date());
-
-        groupRef.collection(FireStoreDB.col_sess).add(newSess).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                @Override
-                public void onSuccess(DocumentReference documentReference) {
-                    pin("Session created!");
                     Toast.makeText(getBaseContext(), "Group created Successfully !", Toast.LENGTH_LONG).show();
 
                     Intent chat = new Intent(getBaseContext(), Chat.class);
                     chat.putExtra("title", grpTitle);
-                    chat.putExtra("gid", groupRef.getId());
+                    chat.putExtra("gid", documentReference.getId());
                     startActivity(chat);
                 }
-            }).addOnFailureListener(new OnFailureListener() {
+            })
+            .addOnFailureListener(new OnFailureListener() {
                 @Override
                 public void onFailure(@NonNull Exception e) {
                     pin("Error writing document : "+e);

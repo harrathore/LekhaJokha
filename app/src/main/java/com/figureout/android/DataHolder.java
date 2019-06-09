@@ -1,10 +1,36 @@
-package lekha.stanbuzz.com.lekhajokha;
+package com.figureout.android;
 
 import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Date;
 
 public class DataHolder {
+
+    public static  class ReportHolder {
+        private String name, phone;
+        private Long invested;
+
+        public ReportHolder() {
+        }
+
+        public ReportHolder(String name, String phone, Long invested) {
+            this.name = name;
+            this.phone = phone;
+            this.invested = invested;
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public String getPhone() {
+            return phone;
+        }
+
+        public Long getInvested() {
+            return invested;
+        }
+    }
 
     public static  class ChatHolder{
         private Long amt;
@@ -102,4 +128,6 @@ public class DataHolder {
             this.title = title;
         }
     }
+
+
 }

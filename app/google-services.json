@@ -8,25 +8,25 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:153850690205:android:38fda16b7f99be5f",
+        "mobilesdk_app_id": "1:153850690205:android:60403f08d1adfcac",
         "android_client_info": {
-          "package_name": "lekha.stanbuzz.com.lekhajokha"
+          "package_name": "com.figureout.android"
         }
       },
       "oauth_client": [
         {
-          "client_id": "153850690205-ltm84hngseg6lbd01nmkifo3b425ar5i.apps.googleusercontent.com",
+          "client_id": "153850690205-ap37sv8kmq14utpbn2d2op6pqmtgo5p9.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "lekha.stanbuzz.com.lekhajokha",
+            "package_name": "com.figureout.android",
             "certificate_hash": "8d24f85adf64a2d5fede9e31fc71b81a165c0a96"
           }
         },
         {
-          "client_id": "153850690205-6ohvdkq76vm9fd34fatmh921rg6em08e.apps.googleusercontent.com",
+          "client_id": "153850690205-q1badvuvs0esv7149dh1ner1mdaugdld.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "lekha.stanbuzz.com.lekhajokha",
+            "package_name": "com.figureout.android",
             "certificate_hash": "855f921a8e00f75ae3a39e281b65d98ffe4187a9"
           }
         },
