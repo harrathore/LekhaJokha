@@ -11,5 +11,8 @@
     <color name="dark">#444444</color>
     <color name="bgColor">#e9ecef</color>
     <color name="red">#d90c0f</color>
-    <color name="green">#09dc0f</color>
+    <color name="green">#2bc536</color>
+    <color name="gray">#2d4054</color>
+    <color name="orange">#1cbd8a</color>
+    <color name="colorHighlight">#80FFFFFF</color>
 </resources>

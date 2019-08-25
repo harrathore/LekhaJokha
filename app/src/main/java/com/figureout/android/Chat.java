@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -82,25 +83,32 @@ public class Chat extends AppCompatActivity {
         if(sid!=null && msg.length()>0 && msg!=" ") {
             Map<String, Object> data = new HashMap<>();
 
-            data.put("msg", msgInp.getText().toString());
+            data.put("msg", msg);
             data.put("type", "MSG");
             data.put("date", new Date());
             data.put("name", sessionMang.getUserName());
             data.put("userId", userRef);
             data.put("sid", sessRef);
 
+
             grpRef.collection(FireStoreDB.col_msg).document().set(data);
             msgInp.setText("");
+
 
             pin("Msg sent");
         }
     }
 
     private void sendAmt() {
-        Long amt = Long.valueOf(amtInp.getText().toString());
+        String strAmt = amtInp.getText().toString();
+        if(strAmt.equals("")) {
+            Toast.makeText(this, "You missed amount !", Toast.LENGTH_LONG).show();
+            return;
+        }
+
+        Long amt = Long.valueOf(strAmt);
         if(sid!=null && amt>0) {
             Map<String, Object> data = new HashMap<>();
-
             data.put("amt", amt);
             data.put("msg", noteInp.getText().toString());
             data.put("type", "TRANS");
@@ -109,10 +117,11 @@ public class Chat extends AppCompatActivity {
             data.put("userId", userRef);
             data.put("sid", sessRef);
 
+
             grpRef.collection(FireStoreDB.col_msg).document().set(data);
             amtInp.setText("");
             noteInp.setText("");
-
+            Toast.makeText(this, "Your amount added successfuly !", Toast.LENGTH_LONG).show();
             pin("Amt sent");
         }
 
@@ -150,7 +159,7 @@ public class Chat extends AppCompatActivity {
         btnSendAmt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sendAmt();
+                    sendAmt();
             }
         });
 

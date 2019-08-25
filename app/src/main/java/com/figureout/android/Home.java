@@ -7,7 +7,6 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-
 import com.google.firebase.firestore.Query;
 
 public class Home extends AppCompatActivity {
@@ -18,6 +17,7 @@ public class Home extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
 
         db = FireStoreDB.getInstance(this);
@@ -28,7 +28,7 @@ public class Home extends AppCompatActivity {
 
         sessionMang.loginOnlyAllowed();
 
-        getSupportActionBar().hide();   //to hide main heading lekh jokha
+        getSupportActionBar().hide();   //to hide main heading lekha jokha
 
         btnNewGrp.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -36,6 +36,7 @@ public class Home extends AppCompatActivity {
                 // Check the SDK version and whether the permission is already granted or not.
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.READ_CONTACTS}, 1);
+
                     //After this point you wait for callback in onRequestPermissionsResult(int, String[], int[]) overriden method
                 } else {
                     Intent newGroup = new Intent(Home.this, NewGroup.class);
@@ -47,5 +48,6 @@ public class Home extends AppCompatActivity {
         Query query = db.getDb().collection(FireStoreDB.col_group).whereArrayContains("member", sessionMang.getUserId());
         RecycleManager recyclerManager = new RecycleManager(this);
         recyclerManager.setGroupRecycler(query, R.id.groupRecycle);
+
     }
 }

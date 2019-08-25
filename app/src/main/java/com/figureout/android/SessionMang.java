@@ -15,7 +15,7 @@ import static android.content.Context.MODE_PRIVATE;
 
 public class SessionMang {
     private static SessionMang single_instance = null;
-    public final String USERSESSION="user_session", LOGIN="login", NAME="name";
+    public final String USERSESSION="user_session", LOGIN="login", NAME="name", INTRO_SEEN="intro_seen";
     private Context context;
     private Activity activity;
     private SharedPreferences session;
@@ -100,6 +100,18 @@ public class SessionMang {
             return session.getString(NAME, "null");
         }
         return "null";
+    }
+
+    public Boolean isIntroSeen() {
+        return session.contains(INTRO_SEEN);
+    }
+
+    public void setIntroComplete() {
+        if(!session.contains(INTRO_SEEN)) {
+            sessionEditor.putBoolean(INTRO_SEEN, true);
+            sessionEditor.commit();
+            pin("login session added");
+        }
     }
 
     private void pin(String m) {

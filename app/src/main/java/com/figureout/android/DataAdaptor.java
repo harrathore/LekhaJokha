@@ -172,27 +172,27 @@ public class DataAdaptor {
                     date1, date2;
             private View card1,card2,card3,card4;
 
-            public ChatViewHolder(final View itemView) {
-                super(itemView);
+    public ChatViewHolder(final View itemView) {
+        super(itemView);
 
-                name1 = (TextView) itemView.findViewById(R.id.name1);
-                name2 = (TextView) itemView.findViewById(R.id.name2);
-                name3 = (TextView) itemView.findViewById(R.id.name3);
-                name4 = (TextView) itemView.findViewById(R.id.name4);
-                msg1 = (TextView) itemView.findViewById(R.id.msg1);
-                msg2 = (TextView) itemView.findViewById(R.id.msg2);
-                amt1 = (TextView) itemView.findViewById(R.id.amt1);
-                amt2 = (TextView) itemView.findViewById(R.id.amt2);
-                note1 = (TextView) itemView.findViewById(R.id.note1);
-                note2 = (TextView) itemView.findViewById(R.id.note2);
-                date1 = (TextView) itemView.findViewById(R.id.date1);
-                date2 = (TextView) itemView.findViewById(R.id.date2);
+        name1 = (TextView) itemView.findViewById(R.id.name1);
+        name2 = (TextView) itemView.findViewById(R.id.name2);
+        name3 = (TextView) itemView.findViewById(R.id.name3);
+        name4 = (TextView) itemView.findViewById(R.id.name4);
+        msg1 = (TextView) itemView.findViewById(R.id.msg1);
+        msg2 = (TextView) itemView.findViewById(R.id.msg2);
+        amt1 = (TextView) itemView.findViewById(R.id.amt1);
+        amt2 = (TextView) itemView.findViewById(R.id.amt2);
+        note1 = (TextView) itemView.findViewById(R.id.note1);
+        note2 = (TextView) itemView.findViewById(R.id.note2);
+        date1 = (TextView) itemView.findViewById(R.id.date1);
+        date2 = (TextView) itemView.findViewById(R.id.date2);
 
-                card1 = (View) itemView.findViewById(R.id.cardView1);
-                card2 = (View) itemView.findViewById(R.id.cardView2);
-                card3 = (View) itemView.findViewById(R.id.cardView3);
-                card4 = (View) itemView.findViewById(R.id.cardView4);
-            }
+        card1 = (View) itemView.findViewById(R.id.cardView1);
+        card2 = (View) itemView.findViewById(R.id.cardView2);
+        card3 = (View) itemView.findViewById(R.id.cardView3);
+        card4 = (View) itemView.findViewById(R.id.cardView4);
+    }
         }
 
         public interface OnItemClickListener {

@@ -46,21 +46,11 @@
             android:text="Group Name"
             android:textColor="@color/dark"
             android:textSize="18sp"
-            app:layout_constraintEnd_toStartOf="@+id/textView6"
             app:layout_constraintHorizontal_bias="0.05"
             app:layout_constraintStart_toEndOf="@+id/imageFrame"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/textView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="8dp"
-            android:text="29/05/2019"
-            android:textSize="12sp"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+
 
         <TextView
             android:id="@+id/textView7"
@@ -69,9 +59,8 @@
             android:layout_marginStart="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="8dp"
-            android:text="Last message will appear here..."
+            android:text="Open group and add your amount..."
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView6"
             app:layout_constraintStart_toStartOf="@+id/title" />
 
         <View
@@ -81,7 +70,7 @@
             android:alpha="0.5"
             android:background="@drawable/btn_grad"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/textView6"
+
             app:layout_constraintStart_toStartOf="@+id/title" />
 
     </android.support.constraint.ConstraintLayout>

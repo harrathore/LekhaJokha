@@ -107,9 +107,9 @@
                 android:layout_height="wrap_content"
                 android:ems="10"
                 android:hint="Enter OTP"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:padding="12dp"
-                android:maxLength="6"
+                android:maxLength="4"
                 android:visibility="gone" />
 
             <EditText
@@ -149,5 +149,22 @@
 
         </LinearLayout>
     </android.support.v7.widget.CardView>
+
+    <com.github.ybq.android.spinkit.SpinKitView
+        android:id="@+id/spin_kit"
+        style="@style/SpinKitView.Large.Circle"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="0dp"
+        android:padding="12dp"
+        android:translationZ="42dp"
+        android:background="@color/colorHighlight"
+        android:visibility="gone"
+        app:SpinKit_Color="@color/colorAccent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

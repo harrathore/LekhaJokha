@@ -2,6 +2,10 @@ package com.figureout.android;
 
 import android.app.Activity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ProgressBar;
+
+import com.github.ybq.android.spinkit.style.DoubleBounce;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.text.SimpleDateFormat;
@@ -12,9 +16,13 @@ public class FireStoreDB {
     private static FireStoreDB single_instance = null;
     private FirebaseFirestore db;
     private Activity activity;
-    public static final String col_user = "users", col_group = "groups", col_msg = "message", col_sess = "sessions", col_mem = "members",
-            user_name = "name",
-            user_phone = "phone";
+    public static final String col_user = "users",
+                            col_group = "groups",
+                            col_msg = "message",
+                            col_sess = "sessions",
+                            col_mem = "members",
+                            user_name = "name",
+                            user_phone = "phone";
 
     private  FireStoreDB(Activity a) {
         activity = a;
@@ -52,6 +60,15 @@ public class FireStoreDB {
             single_instance = new FireStoreDB(a);
         }
         return single_instance;
+    }
+
+    public static ProgressBar getProgressBar(ProgressBar p) {
+        ProgressBar progressBar = p;
+        progressBar.bringToFront();
+        progressBar.setVisibility(View.INVISIBLE);
+        DoubleBounce doubleBounce = new DoubleBounce();
+        progressBar.setIndeterminateDrawable(doubleBounce);
+        return progressBar;
     }
 
     public FirebaseFirestore getDb() {
